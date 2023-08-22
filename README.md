@@ -18,10 +18,10 @@ The code and dataset will be available upon acceptance of the paper. The followi
 -->
 
 
-# InconSeg-PyTorch
+# InconSeg-PaddlePaddle
 The official pytorch implementation of **InconSeg: Residual-Guided Fusion With Inconsistent Multi-Modal Data for Negative and Positive Road Obstacles Segmentation**. ([RA-L](https://ieeexplore.ieee.org/document/10114585)). 
 
-We test our code in Python 3.7, CUDA 11.1, cuDNN 8, and PyTorch 1.7.1. We provide `Dockerfile` to build the docker image we used. You can modify the `Dockerfile` as you want.  
+We test our code in Python 3.7, CUDA 11.1, cuDNN 8, and PaddlePaddle. We provide `Dockerfile` to build the docker image we used. You can modify the `Dockerfile` as you want.  
 <div align=center>
 <img src="docs/overall.png" width="900px"/>
 </div>
@@ -45,16 +45,16 @@ The pretrained weight of InconSeg can be downloaded from [here](https://labsun-m
 # Usage
 * Clone this repo
 ```
-$ git clone https://github.com/lab-sun/InconSeg.git
+$ git clone https://github.com/lab-sun/InconSeg_PaddlePaddle.git
 ```
 * Build docker image
 ```
-$ cd ~/InconSeg
-$ docker build -t docker_image_inconseg .
+$ cd ~/InconSeg_PaddlePaddle
+$ docker build -t docker_image_inconseg_paddlepaddle .
 ```
 * Download the dataset
 ```
-$ (You should be in the InconSeg folder)
+$ (You should be in the InconSeg_PaddlePaddle folder)
 $ mkdir ./dataset
 $ cd ./dataset
 $ (download our preprocessed dataset.zip in this folder)
@@ -62,35 +62,35 @@ $ unzip -d . dataset.zip
 ```
 * To reproduce our results, you need to download our pretrained weights.
 ```
-$ (You should be in the InconSeg folder)
+$ (You should be in the InconSeg_PaddlePaddle folder)
 $ mkdir ./weights_backup
 $ cd ./weights_backup
 $ (download our preprocessed weights.zip in this folder)
 $ unzip -d . weights.zip
-$ docker run -it --shm-size 8G -p 1234:6006 --name docker_container_inconseg --gpus all -v ~/InconSeg:/workspace docker_image_inconseg
+$ docker run -it --shm-size 8G -p 1234:6006 --name docker_container_inconseg_paddlepaddle --gpus all -v ~/InconSeg:/workspace docker_image_inconseg_paddlepaddle
 $ (currently, you should be in the docker)
 $ cd /workspace
 $ (To reproduce the results of RGB & Depth)
-$ python3 run_demo_RGB_Depth.py   
+$ python3 runPaddle_demo_RGB_Depth.py   
 $ (To reproduce the results of RGB & Disparity)
-$ python3 run_demo_RGB_Disparity.py   
+$ python3 runPaddle_demo_RGB_Disparity.py   
 ```
 The results will be saved in the `./runs` folder.
 * To train InconSeg 
 ```
 $ (You should be in the InconSeg folder)
-$ docker run -it --shm-size 8G -p 1234:6006 --name docker_container_inconseg --gpus all -v ~/InconSeg:/workspace docker_image_inconseg
+$ docker run -it --shm-size 8G -p 1234:6006 --name docker_container_inconseg_paddlepaddle --gpus all -v ~/InconSeg:/workspace docker_image_inconseg_paddlepaddle
 $ (currently, you should be in the docker)
 $ cd /workspace
 $ (To train RGB & Depth)
-$ python3 trainInconSeg_with_RGB_Depth.py
+$ python3 trainPaddle_with_RGB_Depth.py
 $ (To train RGB & Disparity)
-$ python3 trainInconSeg_with_RGB_Disparity.py
+$ python3 trainPaddle_with_RGB_Disparity.py
 ```
 * To see the training process
 ```
 $ (fire up another terminal)
-$ docker exec -it docker_container_cekd /bin/bash
+$ docker exec -it docker_container_inconseg_paddlepaddle /bin/bash
 $ cd /workspace
 $ tensorboard --bind_all --logdir=./runs/tensorboard_log/
 $ (fire up your favorite browser with http://localhost:1234, you will see the tensorboard)
